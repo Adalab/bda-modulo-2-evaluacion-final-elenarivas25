@@ -70,3 +70,28 @@ SELECT
 title
 FROM film
 WHERE rating NOT IN ( "R" , "PG-13");
+
+-- EJERCICIO 9: Encuentra la cantidad total de películas en cada clasificación de la tabla film y muestra la clasificación junto con el recuento.
+-- Tenemos que encontrar y mostrar la cantidad total de películas, COUNT(film_id), en cada clasificación para lo que hacemos GROUP BY rating, dentro de la tabla film.
+
+SELECT 
+COUNT(DISTINCT(film_id)) AS NumPorClasificacion, 
+rating
+FROM film
+GROUP BY rating;
+
+-- EJERCICIO 10: Encuentra la cantidad total de películas alquiladas por cada cliente y muestra el ID del cliente, su
+-- nombre y apellido junto con la cantidad de películas alquiladas.
+-- Para este ejercicio necesitamos usar dos tablas, customer y rental, por lo que hago uso del INNER JOIN, estas dos tablas están relacionadas por customer_id.
+-- Nos están pidiendo mostrar el customer_id, first_name, last_name y encontrar y mostrar la cantidad de peliculas alquiladas, COUNT(rental_id), por cada cliente, GROUP BY customer_id.
+
+
+SELECT 
+c.customer_id, 
+c.first_name, 
+c.last_name, 
+COUNT(DISTINCT r.rental_id) AS TotalPelisAlquiladas
+FROM customer AS c
+INNER JOIN rental AS r
+ON c.customer_id = r.customer_id
+GROUP BY c.customer_id;
